@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disclaimer — CI Lighting</title>
+<link rel="icon" href="img/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.legal-content { max-width: 720px; margin: 0 auto; padding: 0 1.5rem 3rem; color: var(--text); }
+.legal-content h1 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+.legal-content h2 { font-size: 1.1rem; margin-top: 2rem; margin-bottom: 0.5rem; color: var(--text); }
+.legal-content p, .legal-content li { margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+.legal-content ul { padding-left: 1.5rem; }
+.legal-content a { color: var(--accent); }
+.legal-content .meta { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 2rem; }
+</style>
+</head>
+<body>
+
+  <button id="menu-btn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+  <div id="menu-overlay"></div>
+  <div id="menu-panel">
+    <button id="menu-close" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+    <div class="menu-header">
+      <img src="img/ci-badge-color.svg" alt="CI">
+      <span>CI Lighting</span>
+    </div>
+    <nav>
+      <a href="index.html"><i class="fa-solid fa-calculator"></i> Calculator</a>
+      <a href="compare.html"><i class="fa-solid fa-scale-balanced"></i> Compare</a>
+      <a href="partners.html"><i class="fa-solid fa-handshake"></i> Partners</a>
+      <a href="articles.html"><i class="fa-solid fa-book-open"></i> Articles</a>
+      <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+      <a href="https://github.com/Shannon-Goddard/lighting-calculator" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+    </nav>
+    <div class="menu-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+  </div>
+
+  <header>
+    <nav>
+      <a href="index.html" class="logo">🌱 CI Lighting</a>
+      <div class="nav-links">
+        <a href="index.html">Calculator</a>
+        <a href="compare.html">Compare</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="legal-content">
+
+<h1>Disclaimer</h1>
+<p class="meta">Last updated: May 30, 2025 · Loyal9 LLC</p>
+
+<h2>1. Informational Purposes Only</h2>
+<p>The CI Lighting platform ("Service") is provided strictly for informational and educational purposes. The Service is a comparison tool that displays manufacturer-published specifications for LED grow lights.</p>
+
+<h2>2. Accuracy of Information</h2>
+<p>While we make reasonable efforts to ensure the accuracy of the information displayed, we cannot guarantee that all data is current, complete, or error-free. Specifically:</p>
+<ul>
+  <li>Product specifications may change without our knowledge</li>
+  <li>Prices are subject to change and may not reflect current retail pricing</li>
+  <li>Calculated fields (watts/sqft, price/watt, cost/grow) are estimates based on the inputs provided</li>
+  <li>Coverage area claims are manufacturer-stated and may vary in real-world conditions</li>
+  <li>Efficacy and PPF values are manufacturer-reported and not independently verified</li>
+</ul>
+<p>We encourage users to verify specifications directly with manufacturers before making purchasing decisions.</p>
+
+<h2>3. No Endorsement</h2>
+<p>The listing of any product on this Service does not constitute an endorsement, recommendation, or guarantee of quality by Loyal9 LLC. We do not:</p>
+<ul>
+  <li>Guarantee the performance of any listed grow light</li>
+  <li>Vouch for manufacturer claims regarding coverage, efficacy, or lifespan</li>
+  <li>Assume responsibility for purchasing decisions made using this data</li>
+</ul>
+
+<h2>4. Affiliate Disclosure</h2>
+<p>This Service contains affiliate links. When you click a product link and make a purchase, we may earn a commission at no additional cost to you. Affiliate relationships do not influence our data collection, calculated metrics, or product inclusion in the dataset.</p>
+
+<h2>5. Electricity Cost Estimates</h2>
+<p>The grow cost calculator provides estimates based on user-provided inputs (wattage, hours, rate, duration). Actual electricity costs may vary due to:</p>
+<ul>
+  <li>Dimming or variable power usage</li>
+  <li>Time-of-use rate structures</li>
+  <li>Additional equipment (fans, pumps, etc.)</li>
+  <li>Seasonal rate changes</li>
+</ul>
+
+<h2>6. Third-Party Transactions</h2>
+<p>Any transactions you conduct with retailers found through this Service are solely between you and that retailer. Loyal9 LLC is not a party to any such transaction and bears no responsibility for product quality, shipping, refunds, or disputes.</p>
+
+<h2>7. Use at Your Own Risk</h2>
+<p>Your use of the Service is entirely at your own risk. Loyal9 LLC shall not be held liable for any damages, losses, or consequences arising from your use of information obtained through the Service.</p>
+
+<h2>8. Contact</h2>
+<p>If you believe any information on the Service is inaccurate, please contact us via our <a href="contact.html">Contact</a> page.</p>
+
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="disclaimer.html">Disclaimer</a></p>
+    <p>© 2026 Loyal9 LLC</p>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const menuPanel = document.getElementById('menu-panel');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuClose = document.getElementById('menu-close');
+    menuBtn.addEventListener('click', () => { menuPanel.classList.add('open'); menuOverlay.classList.add('open'); });
+    menuOverlay.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+    menuClose.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); } });
+  </script>
+</body>
+</html>

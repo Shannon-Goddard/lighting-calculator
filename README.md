@@ -2,7 +2,47 @@
 
 An open dataset of **132 LED grow lights** across **10 brands**, built for home growers who want to make informed purchasing decisions based on real specs — not marketing.
 
+**Live site:** [lighting.poweredbyci.live](https://lighting.poweredbyci.live)
+
 >All data and code provided in this repository is licensed under Creative Commons Attribution 4.0 International. © 2026 Loyal9 LLC.
+
+## Site Features
+
+### Grow Cost Calculator (`index.html`)
+Calculate the real electricity cost of any grow cycle. Select a brand/model, optionally pick from 8,744 strains (auto-fills flowering time), set your schedule and electric rate, and get a full cost breakdown — veg, flower, daily, and monthly.
+
+### Best Light For My Tent (Recommender)
+Pick your tent size and optional budget — get ranked recommendations sorted by efficacy with a "TOP PICK" badge. Built into the calculator page.
+
+### DLI Calculator
+Daily Light Integral calculator — enter PPFD and hours to get your DLI with target ranges for veg, flower, and high-performance grows.
+
+### Compare Tool (`compare.html`)
+Side-by-side comparison of any two lights. Shows watts/sqft, price/watt, efficacy, cost per grow, and highlights the winner on each metric. Includes **Total Cost of Ownership** — purchase price + electricity over 4 grow cycles to show true long-term value.
+
+### Partners (`partners.html`)
+Browsable product showcase of all 132 lights with:
+- Brand filter toggle
+- Sort by price or coverage size
+- Product image backgrounds
+- Info overlay (wattage, efficacy, coverage, W/sqft, warranty, dimmable, certifications)
+- Direct product links (affiliate where available)
+
+### Articles (`articles.html`)
+Practical grow light guides for indoor growers:
+- [How Far Should My Grow Light Be From My Plants?](articles/how-far-should-grow-light-be.html)
+- [How Much Wattage Do I Need Per Square Foot?](articles/how-much-wattage-per-square-foot.html)
+- [Full Spectrum LED — What Does It Actually Mean?](articles/full-spectrum-led-explained.html)
+
+Each article includes social share buttons (X/Twitter, Reddit, Copy Link).
+
+### Contact (`contact.html`)
+Form with inquiry type routing (Data Issue, Feature Request, Partnership, General) via Formspree.
+
+### Navigation
+- Hamburger slide-out menu (always visible) with links to all sections
+- Desktop nav bar with Calculator and Compare
+- Legal pages: Privacy, Terms, Disclaimer
 
 ## Datasets
 
@@ -154,11 +194,11 @@ The `data_timestamp` column in the complete dataset indicates when prices and sp
 
 ## Credits
 
-This dataset was built collaboratively by a human researcher and [Amazon Q Developer](https://aws.amazon.com/q/developer/), an AI coding assistant by AWS.
+This dataset and site were built collaboratively by a human researcher and [Amazon Q Developer](https://aws.amazon.com/q/developer/), an AI coding assistant by AWS.
 
-**Human:** Product research, spec sourcing, data verification, and domain expertise on grow light performance.
+**Human:** Product research, spec sourcing, data verification, domain expertise on grow light performance, and creative direction.
 
-**Amazon Q Developer:** Parser development (10 brand-specific parsers for wildly different formats), data pipeline scripts, schema design, missing data analysis, safe default logic, and documentation.
+**Amazon Q Developer:** Parser development (10 brand-specific parsers for wildly different formats), data pipeline scripts, schema design, missing data analysis, safe default logic, documentation, full site development (calculator, compare tool, partners showcase, articles, hamburger navigation, contact form, legal pages), and article writing.
 
 ## Limitations
 

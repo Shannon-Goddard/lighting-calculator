@@ -232,12 +232,20 @@ document.querySelectorAll('.tent-btn').forEach(btn => {
 });
 
 function filterByTent(size) {
+  const budget = parseFloat(document.getElementById('budget-max').value) || Infinity;
   const matching = lights.filter(l => {
     const fl = parseFloat(l.flowering_footprint_length_ft);
     const fw = parseFloat(l.flowering_footprint_width_ft);
     if (!fl || !fw) return false;
-    return (fl >= size - 0.5 && fl <= size + 0.5) && (fw >= size - 0.5 && fw <= size + 0.5);
+    if (!((fl >= size - 0.5 && fl <= size + 0.5) && (fw >= size - 0.5 && fw <= size + 0.5))) return false;
+    const price = parseFloat(l.price);
+    if (price && price > budget) return false;
+    return true;
   }).sort((a, b) => {
+    // Sort by efficacy (best first), then price/watt
+    const effA = parseFloat(a.efficacy_umol_joule) || 0;
+    const effB = parseFloat(b.efficacy_umol_joule) || 0;
+    if (effB !== effA) return effB - effA;
     const ppwA = parseFloat(a.price) / parseFloat(a.max_Watts);
     const ppwB = parseFloat(b.price) / parseFloat(b.max_Watts);
     return (ppwA || 999) - (ppwB || 999);
@@ -245,17 +253,18 @@ function filterByTent(size) {
 
   const container = document.getElementById('tent-results');
   if (!matching.length) {
-    container.innerHTML = '<p class="muted">No lights found for this tent size.</p>';
+    container.innerHTML = '<p class="muted">No lights found for this tent size' + (budget < Infinity ? ' within budget' : '') + '.</p>';
     return;
   }
 
-  container.innerHTML = matching.slice(0, 10).map(l => {
+  container.innerHTML = matching.slice(0, 10).map((l, i) => {
     const watts = parseFloat(l.max_Watts);
     const price = parseFloat(l.price);
     const ppw = price ? `$${(price / watts).toFixed(2)}/W` : '';
+    const badge = i === 0 ? '<span style="background:var(--accent);color:var(--bg);font-size:0.7rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:0.5rem;">TOP PICK</span>' : '';
     return `<div class="tent-card">
       <div class="tent-card-info">
-        <h4>${l.make} ${l.model}</h4>
+        <h4>${l.make} ${l.model}${badge}</h4>
         <p>${watts}W · ${l.flowering_footprint_length_ft}×${l.flowering_footprint_width_ft} ft${l.efficacy_umol_joule ? ' · ' + l.efficacy_umol_joule + ' µmol/J' : ''}</p>
       </div>
       <div class="tent-card-stats">
@@ -265,6 +274,12 @@ function filterByTent(size) {
     </div>`;
   }).join('');
 }
+
+// Budget filter re-triggers tent search
+document.getElementById('budget-max').addEventListener('input', () => {
+  const activeBtn = document.querySelector('.tent-btn.active');
+  if (activeBtn) filterByTent(parseInt(activeBtn.dataset.size));
+});
 
 // Share calculation
 document.getElementById('share-btn').addEventListener('click', () => {
@@ -309,4 +324,29 @@ function loadFromURL() {
 
     calculate();
   }, 50);
+}
+
+// Hamburger Menu
+const menuBtn = document.getElementById('menu-btn');
+const menuPanel = document.getElementById('menu-panel');
+const menuOverlay = document.getElementById('menu-overlay');
+const menuClose = document.getElementById('menu-close');
+if (menuBtn) {
+  menuBtn.addEventListener('click', () => { menuPanel.classList.add('open'); menuOverlay.classList.add('open'); });
+  menuOverlay.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+  menuClose.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); } });
+}
+
+// DLI Calculator
+function calcDLI() {
+  const ppfd = parseFloat(document.getElementById('dli-ppfd').value) || 0;
+  const hours = parseFloat(document.getElementById('dli-hours').value) || 0;
+  const dli = (ppfd * hours * 3600) / 1000000;
+  document.getElementById('dli-value').textContent = `${dli.toFixed(1)} mol/m²/d`;
+}
+if (document.getElementById('dli-ppfd')) {
+  document.getElementById('dli-ppfd').addEventListener('input', calcDLI);
+  document.getElementById('dli-hours').addEventListener('input', calcDLI);
+  calcDLI();
 }

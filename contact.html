@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — CI Lighting</title>
+<meta name="description" content="Get in touch with CI Lighting. Report data issues, suggest features, or become a partner.">
+<link rel="icon" href="img/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.contact-card { max-width: 600px; margin: 0 auto; padding: 0 1rem 2rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.form-group input, .form-group select, .form-group textarea {
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text); padding: 0.6rem 0.8rem; font-size: 0.95rem; width: 100%; outline: none;
+  font-family: inherit; transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.type-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.5rem; }
+.type-card {
+  border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 1rem;
+  cursor: pointer; text-align: center; transition: all 0.2s; font-size: 0.85rem; color: var(--text-muted);
+}
+.type-card:hover, .type-card.active { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+.type-card i { display: block; font-size: 1.2rem; margin-bottom: 0.4rem; color: var(--accent); }
+.type-card input { display: none; }
+.conditional { display: none; }
+.conditional.visible { display: block; }
+.submit-btn {
+  width: 100%; padding: 0.7rem; border: none; border-radius: var(--radius-sm);
+  background: var(--accent); color: var(--bg); font-size: 0.95rem; font-weight: 600;
+  cursor: pointer; transition: opacity 0.2s;
+}
+.submit-btn:hover { opacity: 0.85; }
+.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.success-msg { display: none; text-align: center; padding: 2rem; }
+.success-msg.visible { display: block; }
+.success-msg i { font-size: 3rem; color: var(--accent); margin-bottom: 0.8rem; }
+.success-msg h2 { margin-bottom: 0.5rem; }
+.success-msg p { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+  <button id="menu-btn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+  <div id="menu-overlay"></div>
+  <div id="menu-panel">
+    <button id="menu-close" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+    <div class="menu-header">
+      <img src="img/ci-badge-color.svg" alt="CI">
+      <span>CI Lighting</span>
+    </div>
+    <nav>
+      <a href="index.html"><i class="fa-solid fa-calculator"></i> Calculator</a>
+      <a href="compare.html"><i class="fa-solid fa-scale-balanced"></i> Compare</a>
+      <a href="partners.html"><i class="fa-solid fa-handshake"></i> Partners</a>
+      <a href="articles.html"><i class="fa-solid fa-book-open"></i> Articles</a>
+      <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+      <a href="https://github.com/Shannon-Goddard/lighting-calculator" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+    </nav>
+    <div class="menu-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+  </div>
+
+  <header>
+    <nav>
+      <a href="index.html" class="logo">🌱 CI Lighting</a>
+      <div class="nav-links">
+        <a href="index.html">Calculator</a>
+        <a href="compare.html">Compare</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Contact Us</h1>
+      <p class="subtitle">Report data issues, suggest features, or become a partner.</p>
+    </section>
+
+    <section class="contact-card">
+      <div class="calc-card">
+        <div id="form-wrap">
+          <div class="type-selector">
+            <label class="type-card" data-type="data">
+              <input type="radio" name="inquiry_type" value="Data Correction">
+              <i class="fa-solid fa-pen"></i> Data Issue
+            </label>
+            <label class="type-card" data-type="feature">
+              <input type="radio" name="inquiry_type" value="Feature Request">
+              <i class="fa-solid fa-lightbulb"></i> Feature
+            </label>
+            <label class="type-card" data-type="partner">
+              <input type="radio" name="inquiry_type" value="Partnership">
+              <i class="fa-solid fa-handshake"></i> Partner
+            </label>
+            <label class="type-card" data-type="general">
+              <input type="radio" name="inquiry_type" value="General">
+              <i class="fa-solid fa-comment"></i> General
+            </label>
+          </div>
+
+          <form id="contact-form" action="https://formspree.io/f/mpqnepoe" method="POST">
+            <input type="hidden" name="_subject" id="form-subject" value="CI Lighting — New Submission">
+            <input type="hidden" name="inquiry_type" id="hidden-type" value="">
+            <input type="text" name="_gotcha" style="display:none">
+
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="conditional" data-for="data">
+              <div class="form-group">
+                <label for="light-name">Which light has incorrect data?</label>
+                <input type="text" id="light-name" name="light_name" placeholder="Brand + Model">
+              </div>
+              <div class="form-group">
+                <label for="correction">What needs correcting?</label>
+                <textarea id="correction" name="correction_details" placeholder="Describe what's wrong and the correct value..."></textarea>
+              </div>
+            </div>
+
+            <div class="conditional" data-for="feature">
+              <div class="form-group">
+                <label for="feature-desc">What would you like to see?</label>
+                <textarea id="feature-desc" name="feature_description" placeholder="Describe the feature or improvement..."></textarea>
+              </div>
+            </div>
+
+            <div class="conditional" data-for="partner">
+              <div class="form-group">
+                <label for="partner-biz">Business / Brand Name</label>
+                <input type="text" id="partner-biz" name="partner_business">
+              </div>
+              <div class="form-group">
+                <label for="partner-url">Website</label>
+                <input type="url" id="partner-url" name="partner_url" placeholder="https://...">
+              </div>
+              <div class="form-group">
+                <label for="partner-msg">Tell us more</label>
+                <textarea id="partner-msg" name="partner_message" placeholder="What are you looking to achieve?"></textarea>
+              </div>
+            </div>
+
+            <div class="conditional" data-for="general">
+              <div class="form-group">
+                <label for="gen-msg">Message</label>
+                <textarea id="gen-msg" name="message" placeholder="What's on your mind?"></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn" disabled>Select an inquiry type above</button>
+          </form>
+        </div>
+
+        <div class="success-msg" id="success">
+          <i class="fa-solid fa-circle-check"></i>
+          <h2>Sent!</h2>
+          <p>We'll get back to you soon. <a href="index.html" style="color:var(--accent);">Back to calculator</a>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data: 132 lights × 10 brands. Updated 2026-07-07.</p>
+    <p><a href="index.html">Calculator</a> · <a href="compare.html">Compare</a> · <a href="https://github.com/Shannon-Goddard/lighting-calculator" target="_blank">Open Dataset</a></p>
+  </footer>
+
+  <script>
+    // Hamburger Menu
+    const menuBtn = document.getElementById('menu-btn');
+    const menuPanel = document.getElementById('menu-panel');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuClose = document.getElementById('menu-close');
+    menuBtn.addEventListener('click', () => { menuPanel.classList.add('open'); menuOverlay.classList.add('open'); });
+    menuOverlay.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+    menuClose.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); } });
+
+    // Contact Form
+    const cards = document.querySelectorAll('.type-card');
+    const conditionals = document.querySelectorAll('.conditional');
+    const submitBtn = document.getElementById('submit-btn');
+    const hiddenType = document.getElementById('hidden-type');
+    const formSubject = document.getElementById('form-subject');
+    const form = document.getElementById('contact-form');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        const type = card.dataset.type;
+        const value = card.querySelector('input').value;
+        hiddenType.value = value;
+        formSubject.value = `CI Lighting — ${value}`;
+        conditionals.forEach(c => c.classList.toggle('visible', c.dataset.for === type));
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+      });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST', body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('form-wrap').style.display = 'none';
+          document.getElementById('success').classList.add('visible');
+        } else {
+          submitBtn.textContent = 'Error — try again';
+          submitBtn.disabled = false;
+        }
+      } catch {
+        submitBtn.textContent = 'Error — try again';
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

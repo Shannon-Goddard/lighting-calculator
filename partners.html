@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partners — CI Lighting</title>
+<meta name="description" content="Browse 132 LED grow lights across 10 brands. View specs, pricing, and product links.">
+<link rel="icon" href="img/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.partners-section { max-width: 800px; margin: 0 auto; padding: 0 1rem 3rem; }
+.filter-toggle { display: flex; gap: 0; margin-bottom: 1.5rem; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); width: fit-content; flex-wrap: wrap; }
+.filter-btn { text-align: center; padding: 0.5rem 1rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text-muted); background: var(--surface); }
+.filter-btn.active { background: var(--accent); color: var(--bg); }
+.filter-btn:hover:not(.active) { background: var(--surface-2); }
+
+.partner-list { display: flex; flex-direction: column; gap: 1.2rem; }
+.partner-row {
+  position: relative; border-radius: var(--radius); overflow: hidden;
+  min-height: 160px; background: var(--surface); border: 1px solid var(--border);
+  transition: transform 0.2s;
+}
+.partner-row:hover { transform: translateY(-2px); }
+.partner-background {
+  position: absolute; inset: 0;
+  background-size: contain; background-position: center; background-repeat: no-repeat;
+  opacity: 0.15;
+}
+.partner-content {
+  position: relative; z-index: 1;
+  padding: 1.2rem; min-height: 160px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.partner-model { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+.partner-specs { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+.partner-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.partner-btn {
+  display: inline-block; padding: 0.4rem 0.7rem;
+  border: 1px solid var(--accent); border-radius: var(--radius-sm);
+  color: var(--accent); font-size: 0.8rem; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.partner-btn:hover { background: var(--accent); color: var(--bg); }
+.partner-price { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+
+/* Info overlay */
+.partner-info-btn {
+  position: absolute; top: 0.8rem; right: 0.8rem; z-index: 2;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 50%;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 14px; cursor: pointer; transition: all 0.2s;
+}
+.partner-info-btn:hover { color: var(--accent); border-color: var(--accent); }
+.partner-overlay {
+  display: none; position: absolute; inset: 0; z-index: 5;
+  background: rgba(15,18,20,0.95); border-radius: var(--radius);
+  padding: 1.2rem; flex-direction: column; justify-content: center; gap: 0.6rem;
+  font-size: 0.8rem; color: var(--text-muted); cursor: pointer;
+}
+.partner-overlay.visible { display: flex; }
+.partner-overlay .info-row { display: flex; align-items: center; gap: 0.5rem; }
+.partner-overlay .info-row i { width: 16px; text-align: center; color: var(--accent); font-size: 12px; }
+.partner-overlay .info-label { font-weight: 600; min-width: 70px; color: var(--text); }
+.partner-overlay .info-close { position: absolute; top: 0.8rem; right: 0.8rem; font-size: 14px; color: var(--text-muted); }
+
+.partner-count { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+
+.cta-box {
+  border: 1px solid var(--accent); border-radius: var(--radius);
+  padding: 1.5rem; text-align: center; margin-top: 2rem;
+  background: var(--accent-bg);
+}
+.cta-box h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+.cta-box p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+.cta-box a {
+  display: inline-block; padding: 0.5rem 1.2rem; background: var(--accent); color: var(--bg);
+  border-radius: var(--radius-sm); font-weight: 600; text-decoration: none; font-size: 0.9rem;
+}
+.cta-box a:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+  <button id="menu-btn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+  <div id="menu-overlay"></div>
+  <div id="menu-panel">
+    <button id="menu-close" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+    <div class="menu-header">
+      <img src="img/ci-badge-color.svg" alt="CI">
+      <span>CI Lighting</span>
+    </div>
+    <nav>
+      <a href="index.html"><i class="fa-solid fa-calculator"></i> Calculator</a>
+      <a href="compare.html"><i class="fa-solid fa-scale-balanced"></i> Compare</a>
+      <a href="partners.html"><i class="fa-solid fa-handshake"></i> Partners</a>
+      <a href="articles.html"><i class="fa-solid fa-book-open"></i> Articles</a>
+      <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+      <a href="https://github.com/Shannon-Goddard/lighting-calculator" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+    </nav>
+    <div class="menu-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+  </div>
+
+  <header>
+    <nav>
+      <a href="index.html" class="logo">🌱 CI Lighting</a>
+      <div class="nav-links">
+        <a href="index.html">Calculator</a>
+        <a href="compare.html">Compare</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Partners</h1>
+      <p class="subtitle">132 LED grow lights across 10 brands.</p>
+    </section>
+
+    <section class="partners-section">
+      <div class="filter-toggle" id="brand-filters"></div>
+      <div class="filter-toggle" id="sort-toggle">
+        <div class="filter-btn active" data-sort="price-asc">Price ↑</div>
+        <div class="filter-btn" data-sort="price-desc">Price ↓</div>
+        <div class="filter-btn" data-sort="size-asc">Size ↑</div>
+        <div class="filter-btn" data-sort="size-desc">Size ↓</div>
+      </div>
+      <div class="partner-count" id="partner-count"></div>
+      <div class="partner-list" id="partner-list"></div>
+
+      <div class="cta-box">
+        <h3>Want to be a partner?</h3>
+        <p>Get your brand featured with verified data and affiliate placement.</p>
+        <a href="contact.html">Get in Touch</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data: 132 lights × 10 brands. Updated 2026-07-07.</p>
+    <p><a href="index.html">Calculator</a> · <a href="compare.html">Compare</a> · <a href="https://github.com/Shannon-Goddard/lighting-calculator" target="_blank">Open Dataset</a></p>
+    <p class="disclosure">This site contains affiliate links. We earn a commission at no extra cost to you.</p>
+  </footer>
+
+  <script>
+    // Hamburger Menu
+    const menuBtn = document.getElementById('menu-btn');
+    const menuPanel = document.getElementById('menu-panel');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuClose = document.getElementById('menu-close');
+    menuBtn.addEventListener('click', () => { menuPanel.classList.add('open'); menuOverlay.classList.add('open'); });
+    menuOverlay.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+    menuClose.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); } });
+
+    const brandFolders = {
+      'ac_infinity_inc': 'ac-infinity',
+      'california_lightworks': 'clw',
+      'gavita_horticultural_lighting': 'gavita',
+      'growers_choice_horticultural_lighting': 'growers_choice',
+      'horticulture_lighting_group': 'hlg',
+      'mammoth_lighting': 'mammoth',
+      'mars_hydro': 'mars-hydro',
+      'photontek_lighting': 'photontek',
+      'spider_farmer': 'spider-farmer',
+      'vivosun': 'vivosun'
+    };
+
+    let lights = [];
+    let activeFilter = 'all';
+    let activeSort = 'price-asc';
+
+    fetch('lighting-data-complete.json').then(r => r.json()).then(data => {
+      lights = data;
+      buildFilters();
+      buildSort();
+      render();
+    });
+
+    function buildSort() {
+      document.querySelectorAll('#sort-toggle .filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#sort-toggle .filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeSort = btn.dataset.sort;
+          render();
+        });
+      });
+    }
+
+    function buildFilters() {
+      const brands = [...new Set(lights.map(l => l.dba || l.make))].sort();
+      const container = document.getElementById('brand-filters');
+      container.innerHTML = `<div class="filter-btn active" data-filter="all">All</div>` +
+        brands.map(b => `<div class="filter-btn" data-filter="${b}">${b}</div>`).join('');
+      container.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeFilter = btn.dataset.filter;
+          render();
+        });
+      });
+    }
+
+    function render() {
+      let filtered = activeFilter === 'all' ? [...lights] : lights.filter(l => (l.dba || l.make) === activeFilter);
+
+      filtered.sort((a, b) => {
+        if (activeSort === 'price-asc') return (parseFloat(a.price) || 9999) - (parseFloat(b.price) || 9999);
+        if (activeSort === 'price-desc') return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+        const sizeA = (parseFloat(a.flowering_footprint_length_ft) || 0) * (parseFloat(a.flowering_footprint_width_ft) || 0);
+        const sizeB = (parseFloat(b.flowering_footprint_length_ft) || 0) * (parseFloat(b.flowering_footprint_width_ft) || 0);
+        if (activeSort === 'size-asc') return sizeA - sizeB;
+        return sizeB - sizeA;
+      });
+      document.getElementById('partner-count').textContent = `Showing ${filtered.length} lights`;
+      const container = document.getElementById('partner-list');
+      container.innerHTML = filtered.map(l => {
+        const folder = brandFolders[l.make_slug] || l.make_slug;
+        const imgUrl = l.img ? `brand/${folder}/images/${l.img}` : '';
+        const productUrl = l.affiliate_url || l.url || '#';
+        const price = parseFloat(l.price);
+        const watts = parseFloat(l.max_Watts);
+        const efficacy = l.efficacy_umol_joule || '—';
+        const coverage = (l.flowering_footprint_length_ft && l.flowering_footprint_width_ft)
+          ? `${l.flowering_footprint_length_ft}×${l.flowering_footprint_width_ft} ft` : '—';
+        const ppw = price ? `$${(price / watts).toFixed(2)}/W` : '';
+        const fl = parseFloat(l.flowering_footprint_length_ft);
+        const fw = parseFloat(l.flowering_footprint_width_ft);
+        const wpsf = (fl && fw) ? `${(watts / (fl * fw)).toFixed(1)} W/sqft` : '';
+
+        return `<div class="partner-row">
+          ${imgUrl ? `<div class="partner-background" style="background-image:url('${imgUrl}')"></div>` : ''}
+          <button class="partner-info-btn" onclick="this.parentElement.querySelector('.partner-overlay').classList.add('visible')"><i class="fas fa-circle-info"></i></button>
+          <div class="partner-overlay" onclick="this.classList.remove('visible')">
+            <i class="fas fa-xmark info-close"></i>
+            <div class="info-row"><i class="fas fa-bolt"></i><span class="info-label">Watts:</span> ${watts}W</div>
+            <div class="info-row"><i class="fas fa-sun"></i><span class="info-label">Efficacy:</span> ${efficacy} µmol/J</div>
+            <div class="info-row"><i class="fas fa-expand"></i><span class="info-label">Coverage:</span> ${coverage}</div>
+            ${wpsf ? `<div class="info-row"><i class="fas fa-fire"></i><span class="info-label">W/sqft:</span> ${wpsf}</div>` : ''}
+            ${l.Warranty_years ? `<div class="info-row"><i class="fas fa-shield-halved"></i><span class="info-label">Warranty:</span> ${l.Warranty_years} yr</div>` : ''}
+            ${l.dimmable === 'TRUE' ? `<div class="info-row"><i class="fas fa-sliders"></i><span class="info-label">Dimmable:</span> Yes</div>` : ''}
+            ${l.Certifications ? `<div class="info-row"><i class="fas fa-certificate"></i><span class="info-label">Certs:</span> ${l.Certifications}</div>` : ''}
+          </div>
+          <div class="partner-content">
+            <div class="partner-model">${l.model}</div>
+            <div class="partner-specs">${watts}W · ${coverage}${price ? ` · $${price.toFixed(0)}` : ''}</div>
+            <div class="partner-buttons">
+              <a href="${productUrl}" class="partner-btn" target="_blank" rel="noopener">${l.dba || l.make} <i class="fas fa-external-link-alt" style="font-size:10px;margin-left:4px;"></i></a>
+              ${ppw ? `<span class="partner-price">${ppw}</span>` : ''}
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

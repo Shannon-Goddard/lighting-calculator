@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles — CI Lighting</title>
+<meta name="description" content="Grow light guides and articles for indoor growers. Learn about light distance, wattage per square foot, and full spectrum LEDs.">
+<link rel="icon" href="img/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.articles-section { max-width: 700px; margin: 0 auto; padding: 0 1rem 3rem; }
+.article-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.5rem; margin-bottom: 1rem; transition: border-color 0.2s;
+  text-decoration: none; display: block;
+}
+.article-card:hover { border-color: var(--accent); }
+.article-card h3 { color: var(--text); font-size: 1.05rem; margin-bottom: 0.4rem; }
+.article-card p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; line-height: 1.5; }
+.article-meta { font-size: 0.75rem; color: var(--text-muted); }
+.article-meta span { margin-right: 1rem; }
+</style>
+</head>
+<body>
+
+  <button id="menu-btn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+  <div id="menu-overlay"></div>
+  <div id="menu-panel">
+    <button id="menu-close" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+    <div class="menu-header">
+      <img src="img/ci-badge-color.svg" alt="CI">
+      <span>CI Lighting</span>
+    </div>
+    <nav>
+      <a href="index.html"><i class="fa-solid fa-calculator"></i> Calculator</a>
+      <a href="compare.html"><i class="fa-solid fa-scale-balanced"></i> Compare</a>
+      <a href="partners.html"><i class="fa-solid fa-handshake"></i> Partners</a>
+      <a href="articles.html"><i class="fa-solid fa-book-open"></i> Articles</a>
+      <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+      <a href="https://github.com/Shannon-Goddard/lighting-calculator" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+    </nav>
+    <div class="menu-legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+  </div>
+
+  <header>
+    <nav>
+      <a href="index.html" class="logo">🌱 CI Lighting</a>
+      <div class="nav-links">
+        <a href="index.html">Calculator</a>
+        <a href="compare.html">Compare</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Articles</h1>
+      <p class="subtitle">Practical grow light guides backed by real data.</p>
+    </section>
+
+    <section class="articles-section">
+      <a href="articles/how-far-should-grow-light-be.html" class="article-card">
+        <h3>How Far Should My Grow Light Be From My Plants?</h3>
+        <p>Light distance isn't a fixed rule — it depends on your fixture's intensity and your plant's growth stage. Here's how to dial it in without burning or stretching.</p>
+        <div class="article-meta">
+          <span><i class="fa-solid fa-clock"></i> 5 min read</span>
+          <span><i class="fa-solid fa-calendar"></i> July 2026</span>
+        </div>
+      </a>
+
+      <a href="articles/how-much-wattage-per-square-foot.html" class="article-card">
+        <h3>How Much Wattage Do I Need Per Square Foot?</h3>
+        <p>Cut through the marketing noise. A clear rule-of-thumb guide to matching your light's power to your grow space — from 2×2 closets to 5×5 tents.</p>
+        <div class="article-meta">
+          <span><i class="fa-solid fa-clock"></i> 6 min read</span>
+          <span><i class="fa-solid fa-calendar"></i> July 2026</span>
+        </div>
+      </a>
+
+      <a href="articles/full-spectrum-led-explained.html" class="article-card">
+        <h3>Full Spectrum LED — What Does It Actually Mean?</h3>
+        <p>Blurple vs white LEDs, what "full spectrum" really means, and why modern LEDs outperform older tech in efficiency, yield, and lifespan.</p>
+        <div class="article-meta">
+          <span><i class="fa-solid fa-clock"></i> 5 min read</span>
+          <span><i class="fa-solid fa-calendar"></i> July 2026</span>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data: 132 lights × 10 brands. Updated 2026-07-07.</p>
+    <p><a href="index.html">Calculator</a> · <a href="compare.html">Compare</a> · <a href="https://github.com/Shannon-Goddard/lighting-calculator" target="_blank">Open Dataset</a></p>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const menuPanel = document.getElementById('menu-panel');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuClose = document.getElementById('menu-close');
+    menuBtn.addEventListener('click', () => { menuPanel.classList.add('open'); menuOverlay.classList.add('open'); });
+    menuOverlay.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+    menuClose.addEventListener('click', () => { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { menuPanel.classList.remove('open'); menuOverlay.classList.remove('open'); } });
+  </script>
+</body>
+</html>

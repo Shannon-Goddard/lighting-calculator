@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Grow Lights — CI Lighting</title>
+  <meta name="description" content="Compare LED grow lights side-by-side. Watts per sqft, price per watt, and cost per grow cycle.">
+  <meta property="og:title" content="Compare Grow Lights — CI Lighting">
+  <meta property="og:description" content="Side-by-side specs and cost comparison for 132 LED grow lights across 10 brands.">
+  <meta property="og:image" content="https://lighting.poweredbyci.live/img/og-image.png">
+  <meta property="og:url" content="https://lighting.poweredbyci.live/compare.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Compare Grow Lights — CI Lighting">
+  <meta name="twitter:description" content="Side-by-side specs and cost comparison for 132 LED grow lights across 10 brands.">
+  <meta name="twitter:image" content="https://lighting.poweredbyci.live/img/og-image.png">
+  <link rel="icon" href="img/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .compare-section { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+    .compare-selectors { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .compare-slot {
+      flex: 1; min-width: 250px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1rem;
+    }
+    .compare-slot h3 { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .compare-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .compare-table th, .compare-table td {
+      padding: 0.6rem 0.8rem; text-align: left;
+      border-bottom: 1px solid var(--border); font-size: 0.9rem;
+    }
+    .compare-table th { color: var(--text-muted); font-weight: 500; width: 35%; }
+    .compare-table .winner { color: var(--accent); font-weight: 600; }
+    .compare-table .loser { color: var(--text-muted); }
+    .compare-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .compare-header {
+      padding: 1rem; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .compare-header h3 { font-size: 1rem; }
+    .compare-header .price { color: var(--accent); font-weight: 600; }
+    .savings {
+      background: var(--accent-bg); border: 1px solid var(--accent-dim);
+      border-radius: var(--radius-sm); padding: 0.8rem 1rem;
+      margin-top: 1rem; font-size: 0.9rem; text-align: center;
+    }
+    .savings strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/" class="logo">🌱 CI Lighting</a>
+      <div class="nav-links">
+        <a href="/">Calculator</a>
+        <a href="compare.html" class="active">Compare</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Compare Grow Lights</h1>
+      <p class="subtitle">Side-by-side specs and cost comparison.</p>
+    </section>
+
+    <section class="compare-section">
+      <div class="compare-selectors">
+        <div class="compare-slot">
+          <h3>Light A</h3>
+          <select id="brand-a"><option value="">Brand...</option></select>
+          <select id="model-a" disabled style="margin-top:0.5rem"><option value="">Model...</option></select>
+        </div>
+        <div class="compare-slot">
+          <h3>Light B</h3>
+          <select id="brand-b"><option value="">Brand...</option></select>
+          <select id="model-b" disabled style="margin-top:0.5rem"><option value="">Model...</option></select>
+        </div>
+      </div>
+
+      <div id="compare-output"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data: 132 lights × 10 brands. Updated 2026-07-07.</p>
+    <p><a href="/">Calculator</a> · <a href="https://github.com/poweredbyci/ci-lighting" target="_blank">Open Dataset</a></p>
+    <p class="disclosure">This site contains affiliate links. We earn a commission at no extra cost to you.</p>
+  </footer>
+
+  <script>
+    let lights = [];
+
+    fetch('lighting-data-complete.json').then(r => r.json()).then(data => {
+      lights = data;
+      populateBrands('brand-a', 'model-a');
+      populateBrands('brand-b', 'model-b');
+    });
+
+    function populateBrands(brandId, modelId) {
+      const brandEl = document.getElementById(brandId);
+      const modelEl = document.getElementById(modelId);
+      const brands = [...new Set(lights.map(l => l.make))].sort();
+      brands.forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b; opt.textContent = b;
+        brandEl.appendChild(opt);
+      });
+
+      brandEl.addEventListener('change', () => {
+        modelEl.innerHTML = '<option value="">Model...</option>';
+        modelEl.disabled = !brandEl.value;
+        if (!brandEl.value) return;
+        lights.filter(l => l.make === brandEl.value).forEach(l => {
+          const opt = document.createElement('option');
+          opt.value = l.index;
+          opt.textContent = `${l.model} (${l.max_Watts}W)`;
+          modelEl.appendChild(opt);
+        });
+      });
+
+      modelEl.addEventListener('change', compare);
+    }
+
+    function compare() {
+      const a = lights.find(l => l.index === document.getElementById('model-a').value);
+      const b = lights.find(l => l.index === document.getElementById('model-b').value);
+      if (!a || !b) { document.getElementById('compare-output').innerHTML = ''; return; }
+
+      const rate = 0.16;
+      const vegDays = 28, flowerDays = 56;
+      const vegHrs = 18, flowerHrs = 12;
+
+      function cycleCost(l) {
+        const w = parseFloat(l.max_Watts);
+        return ((w * vegHrs * vegDays) + (w * flowerHrs * flowerDays)) / 1000 * rate;
+      }
+
+      function wpsf(l) {
+        const fl = parseFloat(l.flowering_footprint_length_ft);
+        const fw = parseFloat(l.flowering_footprint_width_ft);
+        return (fl && fw) ? (parseFloat(l.max_Watts) / (fl * fw)).toFixed(1) : '—';
+      }
+
+      function ppw(l) {
+        const p = parseFloat(l.price);
+        return p ? (p / parseFloat(l.max_Watts)).toFixed(2) : '—';
+      }
+
+      const costA = cycleCost(a), costB = cycleCost(b);
+      const rows = [
+        ['Wattage', `${a.max_Watts}W`, `${b.max_Watts}W`],
+        ['Coverage (flower)', `${a.flowering_footprint_length_ft || '—'}×${a.flowering_footprint_width_ft || '—'}`, `${b.flowering_footprint_length_ft || '—'}×${b.flowering_footprint_width_ft || '—'}`],
+        ['W/sqft', wpsf(a), wpsf(b)],
+        ['Efficacy', `${a.efficacy_umol_joule || '—'} µmol/J`, `${b.efficacy_umol_joule || '—'} µmol/J`],
+        ['PPF', `${a.PPF || '—'}`, `${b.PPF || '—'}`],
+        ['Price', a.price ? `$${parseFloat(a.price).toFixed(0)}` : '—', b.price ? `$${parseFloat(b.price).toFixed(0)}` : '—'],
+        ['$/Watt', `$${ppw(a)}`, `$${ppw(b)}`],
+        ['Cost/Grow*', `$${costA.toFixed(2)}`, `$${costB.toFixed(2)}`],
+        ['Warranty', `${a.Warranty_years || '—'} yr`, `${b.Warranty_years || '—'} yr`],
+        ['Weight', `${a.weight_lb || '—'} lb`, `${b.weight_lb || '—'} lb`],
+      ];
+
+      const savings = Math.abs(costA - costB);
+      const cheaper = costA < costB ? a : b;
+
+      let html = `<div class="compare-card">
+        <div class="compare-header">
+          <h3>${a.make} ${a.model} vs ${b.make} ${b.model}</h3>
+        </div>
+        <table class="compare-table">
+          <tr><th></th><th>${a.model}</th><th>${b.model}</th></tr>
+          ${rows.map(([label, va, vb]) => `<tr><th>${label}</th><td>${va}</td><td>${vb}</td></tr>`).join('')}
+        </table>
+      </div>`;
+
+      if (savings > 0.5) {
+        html += `<div class="savings">
+          <strong>${cheaper.make} ${cheaper.model}</strong> saves <strong>$${savings.toFixed(2)}/grow</strong> in electricity
+          <br><span class="muted">*Based on 4wk veg + 8wk flower at $0.16/kWh</span>
+        </div>`;
+      }
+
+      document.getElementById('compare-output').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

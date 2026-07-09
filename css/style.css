@@ -26,19 +26,12 @@ body {
 /* Nav */
 header nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--border);
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.logo {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text);
-  text-decoration: none;
 }
 
 .nav-links a {
@@ -50,6 +43,17 @@ header nav {
 
 .nav-links a.active,
 .nav-links a:hover { color: var(--accent); }
+
+/* CI Badge - sticky bottom right */
+.ci-watermark {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 999;
+  opacity: 0.25;
+  pointer-events: none;
+}
+.ci-watermark img { height: 32px; }
 
 /* Hero */
 .hero {
